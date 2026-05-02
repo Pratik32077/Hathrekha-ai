@@ -1,0 +1,12 @@
+{
+  "name": "HathRekha AI",
+  "description": "Premium AI-powered palm scanning, destiny analysis, and futuristic astrology guidance app.",
+  "requestFramePermissions": [
+    "camera"
+  ],
+  "majorCapabilities": [
+    "AI Vision Analysis",
+    "Personalized Astrology",
+    "Real-time AI Chatbot"
+  ]
+}

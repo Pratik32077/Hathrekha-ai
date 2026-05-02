@@ -1,0 +1,74 @@
+{
+  "entities": {
+    "user_profiles": {
+      "title": "User Profile",
+      "description": "User registration and subscription status",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string" },
+        "displayName": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "isPremium": { "type": "boolean" },
+        "totalScans": { "type": "number" }
+      },
+      "required": ["uid", "email", "displayName", "isPremium", "totalScans"]
+    },
+    "palm_reports": {
+      "title": "Palm Scan Report",
+      "description": "AI-generated palm reading results",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "date": { "type": "string" },
+        "scores": {
+          "type": "object",
+          "properties": {
+            "destiny": { "type": "number" },
+            "wealth": { "type": "number" },
+            "love": { "type": "number" },
+            "career": { "type": "number" }
+          }
+        },
+        "insights": {
+          "type": "object",
+          "properties": {
+            "personality": { "type": "string" },
+            "wealthForecast": { "type": "string" },
+            "loveDestiny": { "type": "string" },
+            "careerPath": { "type": "string" },
+            "growthWarnings": { "type": "array", "items": { "type": "string" } },
+            "remedies": { "type": "array", "items": { "type": "string" } }
+          }
+        },
+        "luckyTraits": {
+          "type": "object",
+          "properties": {
+            "auraColor": { "type": "string" },
+            "luckyGem": { "type": "string" },
+            "powerNumbers": { "type": "array", "items": { "type": "number" } },
+            "rulingPlanet": { "type": "string" }
+          }
+        },
+        "timelinePredictions": {
+          "type": "object",
+          "properties": {
+            "shortTerm": { "type": "string" },
+            "mediumTerm": { "type": "string" },
+            "longTerm": { "type": "string" }
+          }
+        }
+      }
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "user_profiles",
+      "description": "Private user profile data"
+    },
+    "/users/{userId}/reports/{reportId}": {
+      "schema": "palm_reports",
+      "description": "History of palm scans for the user"
+    }
+  }
+}

@@ -1,0 +1,64 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif:wght@500;600;700&family=Space+Grotesk:wght@400;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Noto Serif", ui-serif, Georgia, serif;
+  
+  --color-mystic-purple: #9d50bb;
+  --color-cosmic-gold: #ffdb3c;
+  --color-deep-space: #131313;
+  --color-void-black: #0e0e0e;
+}
+
+@layer base {
+  body {
+    @apply bg-deep-space text-white font-sans;
+    background: radial-gradient(circle at top right, #320046, #131313 60%);
+    min-height: 100vh;
+  }
+}
+
+@layer components {
+  .glass-card {
+    @apply backdrop-blur-xl bg-white/5 border border-white/10;
+  }
+  
+  .glass-purple {
+    @apply backdrop-blur-xl bg-mystic-purple/20 border border-mystic-purple/30;
+  }
+  
+  .gold-gradient {
+    @apply bg-gradient-to-r from-cosmic-gold via-[#e9c400] to-[#b8860b];
+  }
+  
+  .purple-glow {
+    box-shadow: 0 0 30px rgba(157, 80, 187, 0.3);
+  }
+  
+  .gold-glow {
+    box-shadow: 0 0 30px rgba(255, 219, 60, 0.4);
+  }
+}
+
+@keyframes scan {
+  0% { transform: translateY(-100%); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(300%); opacity: 0; }
+}
+
+.animate-scan {
+  animation: scan 3s ease-in-out infinite;
+}
+
+.cosmic-dust {
+  background-image: 
+    radial-gradient(1px 1px at 20px 30px, #fff, rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 40px 70px, #fff, rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 50px 160px, #fff, rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 90px 40px, #fff, rgba(0,0,0,0));
+  background-repeat: repeat;
+  background-size: 200px 200px;
+  opacity: 0.15;
+}
