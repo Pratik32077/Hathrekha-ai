@@ -59,10 +59,10 @@ export default function Analysis() {
         </div>
       </header>
 
-      <main className="flex-1 w-full max-w-lg mt-16 flex flex-col items-center justify-center space-y-12">
-        <div className="relative w-full aspect-[3/4] rounded-3xl overflow-hidden glass-card border border-mystic-purple/20">
+      <main className="flex-1 w-full max-w-4xl mt-16 flex flex-col lg:flex-row items-center justify-center gap-12 lg:gap-24 py-12">
+        <div className="relative w-full max-w-xs md:max-w-md aspect-[3/4] rounded-[40px] md:rounded-[60px] overflow-hidden glass-card border border-mystic-purple/20 shadow-2xl group">
            {currentImage ? (
-             <img src={currentImage} alt="Scan" className="w-full h-full object-cover opacity-60" />
+             <img src={currentImage} alt="Scan" className="w-full h-full object-cover opacity-60 transition-transform duration-1000 group-hover:scale-110" />
            ) : (
              <div className="w-full h-full bg-void-black flex items-center justify-center text-slate-700 italic">No Image Detected</div>
            )}
@@ -71,40 +71,62 @@ export default function Analysis() {
            <motion.div 
             animate={{ top: ['0%', '100%', '0%'] }}
             transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute left-0 w-full h-[2px] bg-cosmic-gold shadow-[0_0_20px_#ffdb3c] z-20"
+            className="absolute left-0 w-full h-[3px] bg-gradient-to-r from-transparent via-cosmic-gold to-transparent shadow-[0_0_30px_#ffdb3c] z-20"
            />
 
            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
               <motion.div 
-                animate={{ scale: [1, 1.5, 1], opacity: [0.2, 0.4, 0.2] }}
-                transition={{ duration: 2, repeat: Infinity }}
-                className="absolute inset-0 bg-mystic-purple rounded-full blur-3xl shadow-[0_0_60px_#9d50bb]"
+                animate={{ scale: [1, 2, 1], opacity: [0.1, 0.3, 0.1] }}
+                transition={{ duration: 4, repeat: Infinity }}
+                className="absolute inset-0 bg-mystic-purple rounded-full blur-[100px] shadow-[0_0_80px_#9d50bb]"
               />
-              <Sparkles className="w-16 h-16 text-cosmic-gold relative z-30" />
+              <Sparkles className="w-16 h-16 md:w-24 md:h-24 text-cosmic-gold relative z-30 drop-shadow-[0_0_20px_rgba(255,219,60,0.8)]" />
            </div>
+
+           {/* Viewfinder Brackets */}
+           <div className="absolute top-8 left-8 w-12 h-12 border-t-2 border-l-2 border-white/20 rounded-tl-3xl"></div>
+           <div className="absolute top-8 right-8 w-12 h-12 border-t-2 border-r-2 border-white/20 rounded-tr-3xl"></div>
+           <div className="absolute bottom-8 left-8 w-12 h-12 border-b-2 border-l-2 border-white/20 rounded-bl-3xl"></div>
+           <div className="absolute bottom-8 right-8 w-12 h-12 border-b-2 border-r-2 border-white/20 rounded-br-3xl"></div>
         </div>
 
-        <div className="w-full text-center space-y-2">
-           <h1 className="font-serif text-3xl text-mystic-purple">{loadingText}</h1>
-           <p className="text-on-surface-variant text-sm max-w-xs mx-auto">Connecting to the Great Neural Akashic Records...</p>
-        </div>
+        <div className="flex-1 w-full max-w-md space-y-12">
+            <div className="text-center lg:text-left space-y-4">
+               <motion.h1 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="font-serif text-4xl md:text-5xl gold-gradient bg-clip-text text-transparent"
+               >
+                 {loadingText}
+               </motion.h1>
+               <p className="text-slate-400 text-sm md:text-base leading-relaxed italic">
+                 "Ancient algorithms are deciphering the lines of your palm. The cosmic tapestry is revealing your hidden potential."
+               </p>
+            </div>
 
-        <div className="w-full space-y-4">
-           {stats.map((stat, i) => (
-             <div key={i} className="glass-card p-6 rounded-2xl space-y-4">
-                <div className="flex justify-between items-center text-[10px] uppercase tracking-widest font-bold">
-                   <span className="text-tertiary">{stat.label}</span>
-                   <span className="text-cosmic-gold animate-pulse">Scanning...</span>
-                </div>
-                <div className="w-full h-1.5 bg-void-black rounded-full overflow-hidden">
-                   <motion.div 
-                    animate={{ width: ['0%', '80%', '40%', '100%'] }}
-                    transition={{ duration: 5, repeat: Infinity }}
-                    className="h-full bg-gradient-to-r from-mystic-purple via-cosmic-gold to-mystic-purple shadow-[0_0_10px_rgba(157,80,187,0.5)]"
-                   />
-                </div>
-             </div>
-           ))}
+            <div className="w-full space-y-6">
+               {stats.map((stat, i) => (
+                 <motion.div 
+                  key={i} 
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.2 }}
+                  className="glass-card p-6 rounded-[28px] space-y-4 border-white/5 hover:border-mystic-purple/20 transition-colors"
+                 >
+                    <div className="flex justify-between items-center text-[10px] uppercase tracking-[0.2em] font-bold">
+                       <span className="text-on-surface-variant">{stat.label}</span>
+                       <span className="text-cosmic-gold/80 animate-pulse">Calculating...</span>
+                    </div>
+                    <div className="w-full h-2 bg-void-black rounded-full overflow-hidden p-0.5 border border-white/5">
+                       <motion.div 
+                        animate={{ width: ['0%', '80%', '40%', '100%'] }}
+                        transition={{ duration: 5, repeat: Infinity, delay: i * 0.5 }}
+                        className="h-full rounded-full bg-gradient-to-r from-mystic-purple via-cosmic-gold to-mystic-purple shadow-[0_0_15px_#9d50bb]"
+                       />
+                    </div>
+                 </motion.div>
+               ))}
+            </div>
         </div>
       </main>
     </div>

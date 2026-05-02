@@ -29,73 +29,78 @@ export default function Premium() {
         </button>
       </header>
 
-      <main className="pt-24 pb-32 px-6 max-w-3xl mx-auto space-y-12">
+      <main className="pt-24 pb-32 px-6 max-w-6xl mx-auto space-y-12 shrink-0">
         {/* Hero Section */}
-        <section className="text-center space-y-6 flex flex-col items-center">
+        <section className="text-center space-y-8 flex flex-col items-center">
            <motion.div 
             animate={{ scale: [1, 1.1, 1], rotate: [0, 5, -5, 0] }}
             transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-            className="w-32 h-32 relative flex items-center justify-center"
+            className="w-32 h-32 md:w-48 md:h-48 relative flex items-center justify-center"
            >
               <div className="absolute inset-0 gold-glow bg-cosmic-gold/20 rounded-full blur-3xl scale-125"></div>
-              <Award className="w-20 h-20 text-cosmic-gold relative z-10" />
+              <Award className="w-20 h-20 md:w-32 md:h-32 text-cosmic-gold relative z-10" />
            </motion.div>
-           <div className="space-y-4">
-              <h2 className="font-serif text-5xl font-bold bg-gradient-to-b from-white to-slate-500 bg-clip-text text-transparent">HathRekha Pro</h2>
-              <p className="font-sans text-lg text-on-surface-variant max-w-sm mx-auto leading-relaxed">
-                Unlock the ultimate mystical roadmap. High-fidelity palmistry analysis powered by celestial algorithms.
+           <div className="space-y-4 max-w-2xl">
+              <h2 className="font-serif text-5xl md:text-7xl font-bold bg-gradient-to-b from-white to-slate-500 bg-clip-text text-transparent tracking-tight">HathRekha Pro</h2>
+              <p className="font-sans text-lg md:text-xl text-slate-400 max-w-xl mx-auto leading-relaxed">
+                Unlock the ultimate mystical roadmap. High-fidelity palmistry analysis powered by celestial algorithms for the chosen ones.
               </p>
            </div>
         </section>
 
         {/* Pricing Comparison */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
            {/* Free Plan */}
-           <div className="glass-card p-8 rounded-3xl flex flex-col justify-between space-y-8 opacity-60">
-              <div className="space-y-4">
-                 <span className="text-[10px] uppercase tracking-widest font-bold text-slate-500">Standard</span>
-                 <h3 className="text-4xl font-serif">Free</h3>
-                 <p className="text-xs text-slate-500 font-bold uppercase tracking-widest">Basic pathfinding</p>
-                 <ul className="space-y-4">
-                    <li className="flex items-center gap-3 text-sm text-slate-400">
-                       <CheckCircle className="w-4 h-4" /> 1 Scan per day
+           <div className="glass-card p-10 rounded-[40px] flex flex-col justify-between space-y-10 opacity-60 border-white/5">
+              <div className="space-y-6">
+                 <span className="text-[10px] uppercase tracking-[0.3em] font-bold text-slate-500">Standard</span>
+                 <h3 className="text-5xl font-serif">Free</h3>
+                 <p className="text-[10px] text-slate-500 font-bold uppercase tracking-[0.4em]">Basic pathfinding</p>
+                 <ul className="space-y-5">
+                    <li className="flex items-center gap-4 text-sm text-slate-400">
+                       <CheckCircle className="w-5 h-5 text-slate-600" /> 1 Scan per day
                     </li>
-                    <li className="flex items-center gap-3 text-sm text-slate-400">
-                       <CheckCircle className="w-4 h-4" /> Summary results
+                    <li className="flex items-center gap-4 text-sm text-slate-400">
+                       <CheckCircle className="w-5 h-5 text-slate-600" /> Summary results (Text only)
                     </li>
                  </ul>
               </div>
-              <button disabled className="w-full py-4 border border-white/10 rounded-full text-sm font-bold text-slate-500 bg-white/5">
+              <button disabled className="w-full py-5 border border-white/10 rounded-full text-[10px] uppercase tracking-[0.2em] font-bold text-slate-500 bg-white/5">
                 Current Plan
               </button>
            </div>
 
            {/* Pro Plan */}
-           <div className="glass-card p-8 rounded-3xl relative border-cosmic-gold/40 border-2 shadow-[0_0_40px_rgba(255,215,0,0.1)] flex flex-col justify-between space-y-8 group">
-              <div className="absolute -top-3 right-8 bg-cosmic-gold text-void-black px-4 py-1.5 rounded-full text-[8px] font-bold uppercase tracking-widest shadow-xl">Most Mystical</div>
-              <div className="space-y-4">
-                 <span className="text-[10px] uppercase tracking-widest font-bold text-cosmic-gold">Destiny Unlocked</span>
-                 <h3 className="text-4xl font-serif">$14.99<span className="text-lg text-slate-500 font-sans">/mo</span></h3>
-                 <p className="text-xs text-cosmic-gold font-bold uppercase tracking-widest">The complete cosmic vision</p>
-                 <ul className="space-y-4">
-                    <li className="flex items-center gap-3 text-sm text-white">
-                       <Sparkles className="w-5 h-5 text-cosmic-gold" /> Unlimited Scans
+           <div className="glass-card p-10 rounded-[40px] relative border-cosmic-gold/40 border-2 shadow-[0_0_60px_rgba(255,215,0,0.15)] flex flex-col justify-between space-y-10 group overflow-hidden bg-void-black/80">
+              <div className="absolute -top-3 right-8 bg-cosmic-gold text-void-black px-6 py-2 rounded-full text-[10px] font-bold uppercase tracking-widest shadow-2xl z-20">Most Mystical</div>
+              <div className="absolute top-0 right-0 w-32 h-32 bg-cosmic-gold/10 blur-3xl pointer-events-none"></div>
+              
+              <div className="space-y-6 relative z-10">
+                 <span className="text-[10px] uppercase tracking-[0.3em] font-bold text-cosmic-gold">Destiny Unlocked</span>
+                 <div className="flex items-baseline gap-2">
+                   <h3 className="text-5xl font-serif gold-gradient bg-clip-text text-transparent">$14.99</h3>
+                   <span className="text-lg text-slate-500 font-sans">/mo</span>
+                 </div>
+                 <p className="text-[10px] text-cosmic-gold font-bold uppercase tracking-[0.4em]">The complete cosmic vision</p>
+                 <ul className="space-y-5">
+                    <li className="flex items-center gap-4 text-sm text-white">
+                       <Sparkles className="w-6 h-6 text-cosmic-gold" /> Unlimited Scans
                     </li>
-                    <li className="flex items-center gap-3 text-sm text-white">
-                       <FileText className="w-5 h-5 text-cosmic-gold" /> 50+ Page Personal Reports
+                    <li className="flex items-center gap-4 text-sm text-white">
+                       <FileText className="w-6 h-6 text-cosmic-gold" /> 50+ Page Personal Reports
                     </li>
-                    <li className="flex items-center gap-3 text-sm text-white">
-                       <Zap className="w-5 h-5 text-cosmic-gold" /> HD Results & High-Detail Analysis
+                    <li className="flex items-center gap-4 text-sm text-white">
+                       <Zap className="w-6 h-6 text-cosmic-gold" /> HD Results & High-Detail Analysis
                     </li>
-                    <li className="flex items-center gap-3 text-sm text-white">
-                       <Award className="w-5 h-5 text-cosmic-gold" /> Daily Astro-Predictions
+                    <li className="flex items-center gap-4 text-sm text-white">
+                       <Award className="w-6 h-6 text-cosmic-gold" /> Daily Astro-Predictions
                     </li>
                  </ul>
               </div>
               <button 
                 onClick={handleUpgrade} 
                 disabled={user?.isPremium}
-                className="w-full py-5 gold-gradient rounded-full text-void-black font-bold text-sm gold-glow transition-transform active:scale-95 disabled:grayscale"
+                className="w-full py-6 gold-gradient rounded-full text-void-black font-bold text-xs uppercase tracking-[0.2em] gold-glow transition-all hover:scale-[1.02] active:scale-95 disabled:grayscale shadow-2xl"
               >
                 {user?.isPremium ? 'Already Pro' : 'Unlock My Destiny'}
               </button>

@@ -45,25 +45,34 @@ export default function Auth() {
         </div>
       </header>
 
-      <div className="w-full max-w-md pt-16">
-        <motion.div 
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          className="glass-card rounded-3xl p-8 space-y-8"
-        >
+      <div className="w-full max-w-5xl pt-16 flex flex-col md:flex-row items-center gap-12 lg:gap-24 relative z-10">
+        <div className="hidden md:flex flex-1 flex-col space-y-6">
+           <div className="inline-block px-4 py-2 rounded-full border border-cosmic-gold/30 bg-cosmic-gold/10 backdrop-blur-md w-fit">
+              <span className="text-[10px] uppercase tracking-[0.4em] font-bold text-cosmic-gold gold-glow">Portal to the Unknown</span>
+           </div>
+           <h1 className="font-serif text-5xl lg:text-7xl font-bold gold-gradient bg-clip-text text-transparent leading-tight tracking-tight">Decode Your Destiny With Precision AI</h1>
+           <p className="text-slate-400 text-lg lg:text-xl leading-relaxed max-w-lg">Using ancient palmistry wisdom combined with high-fidelity neural patterns to reveal your true path.</p>
+        </div>
+
+        <div className="w-full max-w-md">
+          <motion.div 
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            className="glass-card rounded-[40px] p-8 md:p-10 space-y-8 shadow-[0_30px_100px_rgba(0,0,0,0.5)] border-white/5"
+          >
           <div className="text-center space-y-2">
-            <h1 className="font-serif text-4xl text-mystic-purple">The Stars Await</h1>
-            <p className="text-on-surface-variant text-sm">Sign in to decode your destiny with elite AI precision.</p>
+            <h2 className="font-serif text-4xl text-white">The Stars Await</h2>
+            <p className="text-slate-500 text-sm font-medium tracking-wide">Sign in to become a Universal Seeker.</p>
           </div>
 
-          <div className="space-y-3">
-            <button onClick={handleAuth} className="w-full py-4 glass-card rounded-full flex items-center justify-center gap-3 hover:bg-white/10 transition-all">
-              <Github className="w-5 h-5 text-on-surface" />
-              <span className="font-bold">Continue with GitHub</span>
+          <div className="grid grid-cols-2 gap-4">
+            <button onClick={handleGoogleLogin} className="py-4 glass-card rounded-3xl flex flex-col items-center justify-center gap-3 hover:bg-white/10 transition-all border-white/5 group">
+              <Chrome className="w-6 h-6 text-on-surface group-hover:scale-110 transition-transform" />
+              <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Google</span>
             </button>
-            <button onClick={handleGoogleLogin} className="w-full py-4 glass-card rounded-full flex items-center justify-center gap-3 hover:bg-white/10 transition-all">
-              <Chrome className="w-5 h-5 text-on-surface" />
-              <span className="font-bold">Continue with Google</span>
+            <button onClick={handleAuth} className="py-4 glass-card rounded-3xl flex flex-col items-center justify-center gap-3 hover:bg-white/10 transition-all border-white/5 group">
+              <Github className="w-6 h-6 text-on-surface group-hover:scale-110 transition-transform" />
+              <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400">GitHub</span>
             </button>
           </div>
 
@@ -116,10 +125,10 @@ export default function Auth() {
               <button type="button" className="text-xs text-mystic-purple font-bold">Forgot?</button>
             </div>
 
-            <button type="submit" className="w-full py-5 gold-gradient rounded-full font-bold text-void-black gold-glow transition-transform active:scale-95 flex items-center justify-center gap-2">
-              Analyze My Path
-              <Sparkles className="w-5 h-5" />
-            </button>
+          <button type="submit" className="w-full py-6 gold-gradient rounded-full font-bold text-void-black gold-glow transition-all hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-2 shadow-2xl">
+            <span className="uppercase tracking-[0.3em] text-xs">Unlock My Path</span>
+            <Sparkles className="w-5 h-5" />
+          </button>
           </form>
 
           <div className="text-center space-y-4 pt-4">
@@ -138,5 +147,6 @@ export default function Auth() {
         </p>
       </div>
     </div>
+  </div>
   );
 }

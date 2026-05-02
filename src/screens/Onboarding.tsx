@@ -41,43 +41,49 @@ export default function Onboarding() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-between py-12 px-6">
+    <div className="min-h-screen flex flex-col items-center justify-between py-12 px-6 max-w-4xl mx-auto overflow-hidden">
       <div className="w-full flex justify-end">
-        <button onClick={() => navigate('/auth')} className="text-on-surface-variant text-sm font-sans uppercase tracking-widest">Skip</button>
+        <button onClick={() => navigate('/auth')} className="text-on-surface-variant text-[10px] font-sans uppercase tracking-[0.3em] font-bold">Skip</button>
       </div>
 
-      <div className="flex-1 w-full max-w-md flex flex-col items-center justify-center">
+      <div className="flex-1 w-full flex flex-col items-center justify-center py-12">
         <AnimatePresence mode="wait">
           <motion.div
             key={current}
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -20 }}
-            transition={{ duration: 0.5 }}
-            className="w-full flex flex-col items-center text-center space-y-8"
+            initial={{ opacity: 0, scale: 0.9, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 1.1, y: -20 }}
+            transition={{ type: "spring", stiffness: 100, damping: 20 }}
+            className="w-full flex flex-col items-center text-center space-y-12"
           >
             {steps[current].image ? (
-               <div className="relative w-64 h-64 rounded-full overflow-hidden border-2 border-mystic-purple/20 p-2">
-                  <div className="absolute inset-0 bg-mystic-purple/20 blur-3xl"></div>
-                  <img src={steps[current].image} alt="" className="w-full h-full object-cover rounded-full opacity-60" />
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="w-full h-[2px] bg-mystic-purple shadow-[0_0_15px_#9d50bb] animate-scan"></div>
+               <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-[60px] overflow-hidden border-2 border-white/10 p-2 shadow-2xl rotate-3">
+                  <div className="absolute inset-0 bg-gradient-to-tr from-mystic-purple/40 to-transparent blur-3xl opacity-50"></div>
+                  <img src={steps[current].image} alt="" className="w-full h-full object-cover rounded-[48px] opacity-70 transition-transform duration-700 hover:scale-110" />
+                  <div className="absolute inset-0 flex items-center justify-center p-8">
+                    <div className="w-full h-1 bg-gradient-to-r from-transparent via-mystic-purple to-transparent shadow-[0_0_30px_#9d50bb] animate-scan opacity-80"></div>
                   </div>
                </div>
             ) : steps[current].grid ? (
-               <div className="grid grid-cols-3 gap-4 w-full">
+               <div className="grid grid-cols-3 gap-6 w-full max-w-sm">
                   {steps[current].grid?.map((item, i) => (
-                    <div key={i} className="glass-card aspect-square rounded-2xl flex flex-col items-center justify-center space-y-2 border-cosmic-gold/20">
-                      <div className="text-cosmic-gold">{item.icon}</div>
+                    <motion.div 
+                      key={i} 
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: i * 0.1 }}
+                      className="glass-card aspect-square rounded-3xl flex flex-col items-center justify-center space-y-3 border-cosmic-gold/20 shadow-xl"
+                    >
+                      <div className="text-cosmic-gold group-hover:scale-110 transition-transform">{item.icon}</div>
                       <span className="text-[10px] uppercase font-bold tracking-widest text-cosmic-gold">{item.label}</span>
-                    </div>
+                    </motion.div>
                   ))}
                </div>
             ) : null}
 
-            <div className="glass-card p-8 rounded-3xl space-y-4">
-              <h1 className="font-serif text-3xl font-bold">{steps[current].title}</h1>
-              <p className="font-sans text-on-surface-variant leading-relaxed">
+            <div className="space-y-6 max-w-[280px] md:max-w-md">
+              <h1 className="font-serif text-4xl md:text-5xl font-bold gold-gradient bg-clip-text text-transparent">{steps[current].title}</h1>
+              <p className="font-sans text-slate-400 leading-relaxed text-sm md:text-lg">
                 {steps[current].description}
               </p>
             </div>
@@ -85,23 +91,27 @@ export default function Onboarding() {
         </AnimatePresence>
       </div>
 
-      <div className="w-full max-w-md space-y-8">
-        <div className="flex justify-center gap-2">
+      <div className="w-full max-w-sm space-y-10">
+        <div className="flex justify-center gap-3">
           {steps.map((_, i) => (
-            <div key={i} className={`h-1.5 rounded-full transition-all duration-300 ${i === current ? 'w-8 bg-mystic-purple' : 'w-2 bg-white/10'}`}></div>
+            <motion.div 
+              key={i} 
+              animate={{ width: i === current ? 48 : 8 }}
+              className={`h-2 rounded-full transition-all duration-500 ease-out ${i === current ? 'bg-cosmic-gold shadow-[0_0_15px_#ffdb3c]' : 'bg-white/10'}`}
+            ></motion.div>
           ))}
         </div>
 
         <button 
           onClick={handleNext}
-          className="w-full py-5 gold-gradient rounded-full font-bold text-void-black gold-glow flex items-center justify-center gap-2 transition-transform active:scale-95"
+          className="w-full py-6 gold-gradient rounded-full font-bold text-void-black gold-glow flex items-center justify-center gap-2 transition-all hover:scale-[1.02] active:scale-95 shadow-2xl"
         >
-          {current === steps.length - 1 ? 'Get Started' : 'Next'}
+          <span className="uppercase tracking-[0.2em]">{current === steps.length - 1 ? 'Unlock My Future' : 'Next Insight'}</span>
           <ChevronRight className="w-5 h-5" />
         </button>
 
-        <p className="text-center text-xs text-on-surface-variant/60 font-sans uppercase tracking-[0.2em]">
-          Already have an account? <span onClick={() => navigate('/auth')} className="text-cosmic-gold cursor-pointer">Sign In</span>
+        <p className="text-center text-[10px] text-slate-500 font-sans uppercase tracking-[0.3em] font-medium">
+          Already a believer? <span onClick={() => navigate('/auth')} className="text-cosmic-gold cursor-pointer font-bold border-b border-cosmic-gold/30 pb-0.5 ml-1">Sign In</span>
         </p>
       </div>
     </div>

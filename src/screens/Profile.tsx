@@ -37,114 +37,114 @@ export default function Profile() {
         <MapPin className="w-5 h-5 text-mystic-purple" />
       </header>
 
-      <main className="pt-24 px-6 space-y-12 max-w-lg mx-auto">
+      <main className="pt-24 px-6 space-y-12 max-w-4xl mx-auto">
         {/* User Profile Info */}
-        <section className="flex flex-col items-center text-center space-y-4">
-           <div className="relative">
-              <div className="w-32 h-32 rounded-full border-2 border-mystic-purple p-1 shadow-[0_0_30px_#9d50bb44]">
-                 <img src={user.photoURL || 'https://lh3.googleusercontent.com/aida-public/AB6AXuDdOowMuSd2yKN3lTbLtf7cghWRknyJGJ-lXuYOqIkFAi6g_ifoUF473np1rEG-3b4UtVtv9LmZeCsw-Jd0RPC7MKT3maA7pmtMQ-cocItG9QDGTWXJ3HJX9mcd12Vm9JQDic-ipTWOHYT0_xuPc3RvaMXRG0A6jkTFUDaIAvP07s_BhyAsgYPLIgSSAVTaaFW-tVaW2w2fZBVNzLdfDD2s9c2WLIhiimzuM8pHf-yp_9w3gyHRl7xYW4eVr1IAFzUqXlTElPbTQOa7'} alt="" className="w-full h-full rounded-full object-cover" />
+        <section className="flex flex-col md:flex-row items-center md:items-start text-center md:text-left gap-8 md:gap-12">
+           <div className="relative shrink-0">
+              <div className="w-40 h-40 md:w-56 md:h-56 rounded-[40px] md:rounded-[60px] border-2 border-mystic-purple/30 p-2 shadow-[0_0_50px_#9d50bb33] rotate-3 bg-void-black overflow-hidden group">
+                 <img src={user.photoURL || 'https://lh3.googleusercontent.com/aida-public/AB6AXuDdOowMuSd2yKN3lTbLtf7cghWRknyJGJ-lXuYOqIkFAi6g_ifoUF473np1rEG-3b4UtVtv9LmZeCsw-Jd0RPC7MKT3maA7pmtMQ-cocItG9QDGTWXJ3HJX9mcd12Vm9JQDic-ipTWOHYT0_xuPc3RvaMXRG0A6jkTFUDaIAvP07s_BhyAsgYPLIgSSAVTaaFW-tVaW2w2fZBVNzLdfDD2s9c2WLIhiimzuM8pHf-yp_9w3gyHRl7xYW4eVr1IAFzUqXlTElPbTQOa7'} alt="" className="w-full h-full rounded-[32px] md:rounded-[48px] object-cover opacity-80 group-hover:scale-110 transition-transform duration-700" />
               </div>
-              <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 gold-gradient text-void-black px-4 py-1 rounded-full text-[8px] font-bold uppercase tracking-widest shadow-xl">
-                 {user.isPremium ? 'HathRekha Pro' : 'Free Seeker'}
+              <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 gold-gradient text-void-black px-6 py-2 rounded-full text-[10px] font-bold uppercase tracking-[0.2em] shadow-2xl z-20 whitespace-nowrap">
+                 {user.isPremium ? 'HathRekha Pro Member' : 'Universal Seeker'}
               </div>
            </div>
-           <div>
-              <h2 className="font-serif text-3xl text-mystic-purple">{user.displayName}</h2>
-              <p className="text-sm text-on-surface-variant font-sans tracking-wide uppercase">Seeker of Digital Truth</p>
+           <div className="space-y-6 pt-4">
+              <div className="space-y-1">
+                 <h2 className="font-serif text-4xl md:text-6xl text-white font-bold tracking-tight">{user.displayName}</h2>
+                 <p className="text-sm md:text-lg text-slate-400 font-sans tracking-wide uppercase font-medium">Seeker of Digital Truth • Astral Level 42</p>
+              </div>
+              
+              <div className="flex flex-wrap gap-4 justify-center md:justify-start">
+                <div className="px-6 py-3 rounded-2xl glass-card flex items-center gap-3">
+                   <div className="w-2 h-2 rounded-full bg-cosmic-gold shadow-[0_0_10px_#ffdb3c]"></div>
+                   <span className="text-[10px] font-bold uppercase tracking-widest text-slate-300">{reports.length} Reports</span>
+                </div>
+                <div className="px-6 py-3 rounded-2xl glass-card flex items-center gap-3">
+                   <div className="w-2 h-2 rounded-full bg-mystic-purple shadow-[0_0_10px_#9d50bb]"></div>
+                   <span className="text-[10px] font-bold uppercase tracking-widest text-slate-300">Verified Path</span>
+                </div>
+              </div>
            </div>
         </section>
 
-        {/* Subscription Info */}
-        {user.isPremium && (
-           <motion.section 
-            initial={{ scale: 0.95, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            className="glass-card p-6 rounded-3xl relative overflow-hidden group border-cosmic-gold/20"
-           >
-              <div className="absolute top-0 right-0 w-32 h-32 bg-cosmic-gold/5 blur-3xl"></div>
-              <div className="flex justify-between items-center relative z-10">
-                 <div className="space-y-1">
-                    <h3 className="font-bold text-cosmic-gold flex items-center gap-2 capitalize">
-                       <Award className="w-4 h-4" /> Pro Subscription
-                    </h3>
-                    <p className="text-[10px] text-on-surface-variant uppercase tracking-widest">Valid until Oct 2026</p>
-                 </div>
-                 <button className="gold-gradient text-void-black text-xs font-bold px-6 py-2 rounded-full gold-glow">Manage</button>
-              </div>
-           </motion.section>
-        )}
-
-        {/* Recent Reports */}
-        <section className="space-y-6">
-           <div className="flex justify-between items-center">
-              <h3 className="font-serif text-2xl">My Destiny Reports</h3>
-           </div>
-           <div className="space-y-4">
-              {reports.length > 0 ? reports.map((report, i) => (
-                <div 
-                  key={i} 
-                  onClick={() => handleViewReport(report)}
-                  className="glass-card p-6 rounded-3xl flex items-center gap-6 group hover:bg-white/10 transition-all cursor-pointer"
-                >
-                   <div className="w-12 h-12 rounded-2xl glass-purple flex items-center justify-center text-mystic-purple">
-                      <FileText className="w-5 h-5" />
-                   </div>
-                   <div className="flex-1">
-                      <h4 className="font-bold text-sm">Life Map #{report.id}</h4>
-                      <p className="text-[10px] text-on-surface-variant">Generated: {report.date}</p>
-                   </div>
-                   <ChevronRight className="w-5 h-5 text-slate-500 group-hover:translate-x-1 transition-transform" />
-                </div>
-              )) : (
-                <div className="p-8 text-center glass-card rounded-3xl text-sm text-on-surface-variant italic">
-                  No reports in your timeline yet.
-                </div>
-              )}
-           </div>
-        </section>
-
-        {/* Preferences */}
-        <section className="space-y-6">
-           <h3 className="font-serif text-2xl">Preferences</h3>
-           <div className="glass-card rounded-3xl overflow-hidden divide-y divide-white/5">
-              <div className="p-6 flex justify-between items-center">
-                 <div className="flex items-center gap-4">
-                    <Globe className="w-5 h-5 text-mystic-purple" />
-                    <div>
-                       <p className="text-sm font-bold">Language Settings</p>
-                       <p className="text-[10px] text-on-surface-variant uppercase tracking-widest">Choose destiny's voice</p>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+          <div className="lg:col-span-2 space-y-12">
+            {/* Recent Reports */}
+            <section className="space-y-6">
+               <div className="flex justify-between items-center px-2">
+                  <h3 className="font-serif text-3xl">Cosmic Timeline</h3>
+               </div>
+               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {reports.length > 0 ? reports.map((report, i) => (
+                    <motion.div 
+                      key={i} 
+                      whileHover={{ y: -5 }}
+                      onClick={() => handleViewReport(report)}
+                      className="glass-card p-6 rounded-[32px] flex items-center gap-6 group hover:border-mystic-purple/30 transition-all cursor-pointer border-white/5 shadow-xl"
+                    >
+                       <div className="w-14 h-14 rounded-2xl glass-purple flex items-center justify-center text-mystic-purple shadow-inner">
+                          <FileText className="w-6 h-6" />
+                       </div>
+                       <div className="flex-1">
+                          <h4 className="font-bold text-sm">Path Reading #{report.id}</h4>
+                          <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest mt-1">{report.date}</p>
+                       </div>
+                       <ChevronRight className="w-5 h-5 text-slate-600 group-hover:translate-x-1 transition-transform" />
+                    </motion.div>
+                  )) : (
+                    <div className="col-span-2 p-12 text-center glass-card rounded-[40px] text-sm text-slate-500 italic border-dashed border-white/10">
+                      No reports in your timeline yet. Scan your palm to begin.
                     </div>
-                 </div>
-                 <div className="bg-void-black/50 p-1 rounded-full flex gap-1">
-                    <button className="px-5 py-1 text-[10px] font-bold bg-mystic-purple rounded-full">EN</button>
-                    <button className="px-5 py-1 text-[10px] font-bold text-on-surface-variant">HI</button>
-                 </div>
-              </div>
-              <div className="p-6 flex justify-between items-center group cursor-pointer hover:bg-white/5 transition-all">
-                 <div className="flex items-center gap-4">
-                    <Settings className="w-5 h-5 text-mystic-purple" />
-                    <p className="text-sm font-bold">App Settings</p>
-                 </div>
-                 <ChevronRight className="w-5 h-5 text-slate-500 group-hover:translate-x-1 transition-transform" />
-              </div>
-              <div className="p-6 flex justify-between items-center group cursor-pointer hover:bg-white/5 transition-all">
-                 <div className="flex items-center gap-4">
-                    <Shield className="w-5 h-5 text-mystic-purple" />
-                    <p className="text-sm font-bold">Privacy & Security</p>
-                 </div>
-                 <ChevronRight className="w-5 h-5 text-slate-500 group-hover:translate-x-1 transition-transform" />
-              </div>
-           </div>
-        </section>
+                  )}
+               </div>
+            </section>
+          </div>
 
-        {/* Logout */}
-        <button 
-           onClick={handleSignOut}
-           className="w-full py-5 glass-card rounded-3xl text-sm font-bold text-red-500 flex items-center justify-center gap-3 hover:bg-red-500/10 transition-all active:scale-95 border-red-500/20"
-        >
-           <LogOut className="w-5 h-5" />
-           Sign Out
-        </button>
+          <div className="space-y-12">
+            {/* Preferences */}
+            <section className="space-y-6">
+               <h3 className="font-serif text-2xl px-2">Preferences</h3>
+               <div className="glass-card rounded-[40px] overflow-hidden divide-y divide-white/5 border-white/5 shadow-2xl">
+                  <div className="p-8 flex justify-between items-center group cursor-pointer hover:bg-white/5 transition-all">
+                     <div className="flex items-center gap-4">
+                        <Globe className="w-6 h-6 text-mystic-purple" />
+                        <div>
+                           <p className="text-sm font-bold">Language Settings</p>
+                           <p className="text-[10px] text-slate-500 uppercase tracking-widest font-bold">Divine Voice</p>
+                        </div>
+                     </div>
+                     <div className="bg-void-black p-1 rounded-full flex gap-1 border border-white/5">
+                        <button className="px-5 py-2 text-[10px] font-bold bg-mystic-purple rounded-full shadow-lg">EN</button>
+                        <button className="px-5 py-2 text-[10px] font-bold text-slate-500">HI</button>
+                     </div>
+                  </div>
+                  <div className="p-8 flex justify-between items-center group cursor-pointer hover:bg-white/5 transition-all">
+                     <div className="flex items-center gap-4">
+                        <Settings className="w-6 h-6 text-mystic-purple" />
+                        <p className="text-sm font-bold">System Calibration</p>
+                     </div>
+                     <ChevronRight className="w-5 h-5 text-slate-600 group-hover:translate-x-1 transition-transform" />
+                  </div>
+                  <div className="p-8 flex justify-between items-center group cursor-pointer hover:bg-white/5 transition-all">
+                     <div className="flex items-center gap-4">
+                        <Shield className="w-6 h-6 text-mystic-purple" />
+                        <p className="text-sm font-bold">Spiritual Privacy</p>
+                     </div>
+                     <ChevronRight className="w-5 h-5 text-slate-600 group-hover:translate-x-1 transition-transform" />
+                  </div>
+               </div>
+            </section>
+
+            {/* Logout */}
+            <button 
+               onClick={handleSignOut}
+               className="w-full py-6 glass-card rounded-[40px] text-[10px] uppercase tracking-[0.3em] font-bold text-red-500 flex items-center justify-center gap-3 hover:bg-red-500/10 transition-all active:scale-95 border-red-500/20 shadow-xl"
+            >
+               <LogOut className="w-5 h-5" />
+               Sever Connection
+            </button>
+          </div>
+        </div>
       </main>
 
       <BottomNav />

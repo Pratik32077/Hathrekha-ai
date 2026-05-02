@@ -47,38 +47,46 @@ export default function Chat() {
     <div className="h-screen bg-void-black text-white flex flex-col relative overflow-hidden">
       <div className="fixed inset-0 cosmic-dust opacity-10 pointer-events-none"></div>
       
-      <header className="fixed top-0 left-0 w-full z-50 flex items-center justify-between px-6 py-4 bg-void-black/40 backdrop-blur-xl border-b border-white/10">
+      <header className="fixed top-0 left-0 w-full z-50 flex items-center justify-between px-6 py-4 bg-void-black/40 backdrop-blur-xl border-b border-white/10 max-w-6xl mx-auto left-1/2 -translate-x-1/2">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-full border border-mystic-purple/30 overflow-hidden bg-slate-900 p-1">
+          <div className="w-10 h-10 rounded-full border border-mystic-purple/30 overflow-hidden bg-slate-900 p-1 hidden sm:block">
              <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAE6UppOrLWwZYYAKQmCQV2dBBb-WFenuHwXc4XCZjPlHC65CVFNxw5z7lu93SVqiqlwIZhxVxECwpVGWCVhFNuMykaY5ws8PxeqvAg6EnoRMmlhe5AJlHxc0if4PuJ76rxtYoBCYWMBUsBslBNNSVP_OeMR4by2DpenOE87zZOYYNt83J3K0ejc8xaY4LIV-iqywNyAUB9yLrZ6iGMC-o4jaMVXYJkaaWOOHsbPG8upZAPSo0jtTUFVnqR4LM8uwL0Zd0u-VDP3hLl" className="w-full h-full rounded-full" alt="" />
           </div>
           <div>
             <h1 className="font-serif font-bold text-lg gold-gradient bg-clip-text text-transparent">Astro AI Guide</h1>
-            <p className="text-[10px] text-on-surface-variant font-bold uppercase tracking-widest">Reading your palms</p>
+            <p className="text-[10px] text-slate-500 font-bold uppercase tracking-[0.2em]">Divine Intelligence at your service</p>
           </div>
         </div>
         <div className="flex items-center gap-4">
-           <MapPin className="w-4 h-4 text-slate-500" />
-           <div className="w-8 h-8 rounded-full bg-mystic-purple/10 flex items-center justify-center border border-mystic-purple/30">
-              <User className="w-4 h-4 text-mystic-purple" />
+           <div className="hidden md:flex flex-col items-end">
+              <span className="text-[8px] uppercase tracking-widest text-slate-500 font-bold">Signal Strength</span>
+              <div className="flex gap-1 h-1 mt-1">
+                 <div className="w-3 bg-cosmic-gold rounded-full"></div>
+                 <div className="w-3 bg-cosmic-gold rounded-full"></div>
+                 <div className="w-3 bg-cosmic-gold rounded-full"></div>
+              </div>
+           </div>
+           <div className="w-10 h-10 rounded-full bg-mystic-purple/10 flex items-center justify-center border border-mystic-purple/30 shadow-lg">
+              <User className="w-5 h-5 text-mystic-purple" />
            </div>
         </div>
       </header>
 
-      <main className="flex-1 pt-24 pb-48 overflow-y-auto px-6 space-y-6">
-        <div className="max-w-2xl mx-auto space-y-6">
+      <main className="flex-1 pt-24 pb-48 overflow-y-auto px-6">
+        <div className="max-w-4xl mx-auto space-y-8">
            <AnimatePresence initial={false}>
             {messages.map((msg, i) => (
               <motion.div
                 key={i}
-                initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
+                initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
                 className={`flex flex-col ${msg.role === 'ai' ? 'items-start' : 'items-end'}`}
               >
-                <div className={`max-w-[85%] p-5 rounded-3xl space-y-2 ${msg.role === 'ai' ? 'rounded-tl-none glass-purple text-on-primary-container' : 'rounded-tr-none glass-card text-on-surface'}`}>
-                   <p className="text-sm leading-relaxed">{msg.text}</p>
+                <div className={`max-w-[85%] md:max-w-[70%] p-6 rounded-[32px] space-y-2 shadow-2xl relative ${msg.role === 'ai' ? 'rounded-tl-none glass-purple border-white/10' : 'rounded-tr-none bg-white text-void-black'}`}>
+                   {msg.role === 'ai' && <div className="absolute -left-2 -top-2 text-cosmic-gold"><Sparkles className="w-5 h-5" /></div>}
+                   <p className="text-sm md:text-base leading-relaxed tracking-wide">{msg.text}</p>
                 </div>
-                <span className="text-[8px] uppercase tracking-widest font-bold text-slate-500 mt-2 mx-3">{msg.time}</span>
+                <span className="text-[8px] md:text-[10px] uppercase tracking-[0.3em] font-bold text-slate-600 mt-3 mx-4">{msg.time}</span>
               </motion.div>
             ))}
            </AnimatePresence>
@@ -111,31 +119,34 @@ export default function Chat() {
 
       {/* Input Overlay */}
       <div className="fixed bottom-0 left-0 w-full z-40 bg-gradient-to-t from-void-black via-void-black to-transparent pt-12 pb-6 px-6">
-         <div className="max-w-2xl mx-auto mb-20">
-            <div className="relative glass-card rounded-full p-1 border border-white/10 group focus-within:border-mystic-purple transition-all shadow-[0_10px_40px_rgba(0,0,0,0.5)]">
+         <div className="max-w-4xl mx-auto mb-20">
+            <div className="relative glass-card rounded-full p-1.5 border border-white/10 group focus-within:border-mystic-purple transition-all shadow-[0_20px_60px_rgba(0,0,0,0.8)] backdrop-blur-2xl">
                <div className="flex items-center">
-                  <button className="p-3 text-slate-500 hover:text-mystic-purple transition-colors">
-                     <PlusCircle className="w-6 h-6" />
+                  <button className="p-4 text-slate-500 hover:text-mystic-purple transition-colors">
+                     <PlusCircle className="w-7 h-7" />
                   </button>
                   <input 
                     type="text" 
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
                     onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-                    placeholder="Whisper your question to the stars..." 
-                    className="flex-1 bg-transparent border-none focus:ring-0 text-sm placeholder:text-slate-600 text-on-surface py-3"
+                    placeholder="Whisper your question to the cosmic consciousness..." 
+                    className="flex-1 bg-transparent border-none focus:ring-0 text-sm md:text-base placeholder:text-slate-600 text-white py-4"
                   />
                   <button 
                     onClick={handleSend}
                     disabled={!input.trim()}
-                    className={`p-3 rounded-full transition-all ${input.trim() ? 'bg-cosmic-gold text-void-black gold-glow' : 'text-slate-600 grayscale'}`}
+                    className={`px-6 py-4 rounded-full transition-all flex items-center justify-center gap-2 ${input.trim() ? 'bg-cosmic-gold text-void-black gold-glow scale-100' : 'text-slate-600 grayscale scale-95 opacity-50'}`}
                   >
+                     <span className="hidden sm:block text-[10px] font-bold uppercase tracking-widest">Transmit</span>
                      <Send className="w-5 h-5" />
                   </button>
                </div>
             </div>
          </div>
-         <BottomNav />
+         <div className="max-w-4xl mx-auto">
+           <BottomNav />
+         </div>
       </div>
     </div>
   );
