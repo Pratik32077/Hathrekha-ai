@@ -16,6 +16,39 @@ export default function Results() {
     );
   }
 
+  const handleShare = async () => {
+    if (!currentReport) return;
+
+    const shareText = `🔮 My HathRekha AI Destiny Report:
+✨ Destiny Score: ${currentReport.scores.destiny}/100
+❤️ Love: ${currentReport.scores.love} | 💰 Wealth: ${currentReport.scores.wealth}
+🌟 Aura: ${currentReport.luckyTraits.auraColor}
+🌍 Ruling Planet: ${currentReport.luckyTraits.rulingPlanet}
+
+"${currentReport.insights.personality.substring(0, 100)}..."
+
+Discover your own destiny at HathRekha AI!`;
+
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: 'My HathRekha AI Reading',
+          text: shareText,
+          url: window.location.origin
+        });
+      } catch (err) {
+        console.log("Share cancelled or failed");
+      }
+    } else {
+      try {
+        await navigator.clipboard.writeText(shareText);
+        alert("Destiny summary copied to clipboard! Paste it on WhatsApp or Instagram.");
+      } catch (err) {
+        alert("Unable to share at this time.");
+      }
+    }
+  };
+
   return (
     <div className="min-h-screen pb-48">
       <header className="fixed top-0 left-0 w-full z-50 flex items-center justify-between px-6 py-4 bg-void-black/40 backdrop-blur-xl border-b border-white/10">
@@ -172,7 +205,10 @@ export default function Results() {
 
         {/* Action Buttons */}
         <section className="space-y-4 py-8">
-           <button className="w-full p-6 glass-card rounded-3xl flex items-center justify-between group active:scale-95 transition-all">
+           <button 
+            onClick={handleShare}
+            className="w-full p-6 glass-card rounded-3xl flex items-center justify-between group active:scale-95 transition-all"
+           >
               <div className="flex items-center gap-4">
                  <div className="w-14 h-14 rounded-2xl gold-gradient flex items-center justify-center text-void-black">
                     <Share2 className="w-6 h-6" />
