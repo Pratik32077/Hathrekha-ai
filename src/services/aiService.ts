@@ -4,7 +4,7 @@ const apiKey = process.env.GEMINI_API_KEY || '';
 if (!apiKey) {
   console.warn("GEMINI_API_KEY is missing. AI functionality will be limited to mock data.");
 }
-const ai = new GoogleGenAI({ apiKey });
+const ai = new GoogleGenAI({ apiKey: apiKey || 'NO_KEY_PROVIDED' });
 
 export async function interpretPalm(imageData: string) {
   const prompt = `

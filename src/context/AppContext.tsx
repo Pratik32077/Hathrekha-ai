@@ -128,6 +128,9 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         setReports([]);
         setLoading(false);
       }
+    }, (error) => {
+      console.error("Auth listener error", error);
+      setLoading(false);
     });
 
     return () => unsubscribeAuth();
