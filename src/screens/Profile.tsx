@@ -4,7 +4,7 @@ import { Award, LogOut, Settings, Shield, Globe, FileText, ChevronRight, MapPin 
 import BottomNav from '../components/BottomNav';
 import { useApp } from '../context/AppContext';
 
-import { auth } from '../lib/firebase';
+import { auth, signOutUser } from '../lib/firebase';
 
 export default function Profile() {
   const navigate = useNavigate();
@@ -14,7 +14,7 @@ export default function Profile() {
 
   const handleSignOut = async () => {
     try {
-      await auth.signOut();
+      await signOutUser();
       navigate('/auth');
     } catch (error) {
       console.error("Sign out error", error);

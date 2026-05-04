@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'motion/react';
-import { Mail, Lock, Smartphone, Github, Chrome, Sparkles } from 'lucide-react';
+import { Mail, Lock, Smartphone, Github, Chrome, Sparkles, User as UserIcon } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 
-import { signInWithGoogle } from '../lib/firebase';
+import { signInWithGoogle, signInWithEmail, signUpWithEmail } from '../lib/firebase';
 
 export default function Auth() {
+  const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [name, setName] = useState('');
   const [error, setError] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
   const { user } = useApp();
 
@@ -24,17 +27,45 @@ export default function Auth() {
       await signInWithGoogle();
       navigate('/dashboard');
     } catch (err: any) {
+      console.error(err);
       setError("Failed to align with the stars. Try again.");
     }
   };
 
-  const handleAuth = (e: React.FormEvent) => {
+  const handleAuth = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError("Traditional paths are currently blocked by celestial alignment. Please use Google Login.");
+    if (!email || !password || (!isLogin && !name)) {
+      setError("Please fill in all cosmic coordinates.");
+      return;
+    }
+
+    try {
+      setIsSubmitting(true);
+      setError(null);
+      if (isLogin) {
+        await signInWithEmail(email, password);
+      } else {
+        await signUpWithEmail(email, password, name);
+      }
+      navigate('/dashboard');
+    } catch (err: any) {
+      console.error(err);
+      if (err.code === 'auth/user-not-found' || err.code === 'auth/wrong-password') {
+        setError("Invalid credentials. The stars don't recognize you.");
+      } else if (err.code === 'auth/email-already-in-use') {
+        setError("This cosmic identity already exists. Try signing in.");
+      } else if (err.code === 'auth/weak-password') {
+        setError("Password is too simple for a celestial traveler.");
+      } else {
+        setError("The celestial gates are stuck. Please try again.");
+      }
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center px-6 py-12 relative">
+    <div className="min-h-screen flex flex-col items-center justify-center px-6 py-12 relative overflow-hidden">
       <div className="fixed top-20 right-10 w-64 h-64 bg-mystic-purple/10 blur-[120px] rounded-full pointer-events-none"></div>
       <div className="fixed bottom-20 left-10 w-80 h-80 bg-cosmic-gold/5 blur-[120px] rounded-full pointer-events-none"></div>
 
@@ -61,8 +92,10 @@ export default function Auth() {
             className="glass-card rounded-[40px] p-8 md:p-10 space-y-8 shadow-[0_30px_100px_rgba(0,0,0,0.5)] border-white/5"
           >
           <div className="text-center space-y-2">
-            <h2 className="font-serif text-4xl text-white">The Stars Await</h2>
-            <p className="text-slate-500 text-sm font-medium tracking-wide">Sign in to become a Universal Seeker.</p>
+            <h2 className="font-serif text-4xl text-white">{isLogin ? 'The Stars Await' : 'Begin Your Journey'}</h2>
+            <p className="text-slate-500 text-sm font-medium tracking-wide">
+              {isLogin ? 'Sign in to become a Universal Seeker.' : 'Join the elite circle of destinies revealed.'}
+            </p>
           </div>
 
           <div className="grid grid-cols-2 gap-4">
@@ -70,7 +103,7 @@ export default function Auth() {
               <Chrome className="w-6 h-6 text-on-surface group-hover:scale-110 transition-transform" />
               <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Google</span>
             </button>
-            <button onClick={handleAuth} className="py-4 glass-card rounded-3xl flex flex-col items-center justify-center gap-3 hover:bg-white/10 transition-all border-white/5 group">
+            <button className="py-4 glass-card rounded-3xl flex flex-col items-center justify-center gap-3 hover:bg-white/10 transition-all border-white/5 group opacity-50 cursor-not-allowed">
               <Github className="w-6 h-6 text-on-surface group-hover:scale-110 transition-transform" />
               <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400">GitHub</span>
             </button>
@@ -84,11 +117,27 @@ export default function Auth() {
 
           <div className="flex items-center gap-4 py-2">
             <div className="flex-1 h-px bg-white/10"></div>
-            <span className="text-[10px] uppercase tracking-widest text-on-surface-variant/60 font-bold">or email</span>
+            <span className="text-[10px] uppercase tracking-widest text-on-surface-variant/60 font-bold">or use email</span>
             <div className="flex-1 h-px bg-white/10"></div>
           </div>
 
           <form onSubmit={handleAuth} className="space-y-4">
+            {!isLogin && (
+              <div className="space-y-1">
+                <label className="text-[10px] uppercase tracking-widest font-bold text-on-surface-variant ml-4">Full Name</label>
+                <div className="relative">
+                  <UserIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-mystic-purple/50" />
+                  <input 
+                    type="text" 
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    placeholder="Grand Seeker" 
+                    className="w-full bg-void-black/50 border border-white/10 rounded-full py-4 pl-12 pr-6 focus:border-mystic-purple focus:ring-1 focus:ring-mystic-purple outline-none transition-all"
+                  />
+                </div>
+              </div>
+            )}
+
             <div className="space-y-1">
               <label className="text-[10px] uppercase tracking-widest font-bold text-on-surface-variant ml-4">Email Address</label>
               <div className="relative">
@@ -117,27 +166,41 @@ export default function Auth() {
               </div>
             </div>
 
-            <div className="flex justify-between items-center px-4">
-              <label className="flex items-center gap-2 cursor-pointer">
-                <input type="checkbox" className="w-4 h-4 rounded border-white/10 bg-void-black/50 text-mystic-purple focus:ring-mystic-purple" />
-                <span className="text-xs text-on-surface-variant">Remember me</span>
-              </label>
-              <button type="button" className="text-xs text-mystic-purple font-bold">Forgot?</button>
-            </div>
+            {isLogin && (
+              <div className="flex justify-between items-center px-4">
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input type="checkbox" className="w-4 h-4 rounded border-white/10 bg-void-black/50 text-mystic-purple focus:ring-mystic-purple" />
+                  <span className="text-xs text-on-surface-variant">Keep me in orbit</span>
+                </label>
+                <button type="button" className="text-xs text-mystic-purple font-bold">Lost your way?</button>
+              </div>
+            )}
 
-          <button type="submit" className="w-full py-6 gold-gradient rounded-full font-bold text-void-black gold-glow transition-all hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-2 shadow-2xl">
-            <span className="uppercase tracking-[0.3em] text-xs">Unlock My Path</span>
-            <Sparkles className="w-5 h-5" />
+          <button 
+            type="submit" 
+            disabled={isSubmitting}
+            className="w-full py-6 gold-gradient rounded-full font-bold text-void-black gold-glow transition-all hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-2 shadow-2xl disabled:opacity-50"
+          >
+            <span className="uppercase tracking-[0.3em] text-xs">
+              {isSubmitting ? 'Channeling...' : (isLogin ? 'Unlock My Path' : 'Cast Into Destiny')}
+            </span>
+            {!isSubmitting && <Sparkles className="w-5 h-5" />}
           </button>
           </form>
 
           <div className="text-center space-y-4 pt-4">
             <button className="text-[10px] uppercase tracking-widest font-bold text-on-surface-variant hover:text-mystic-purple flex items-center justify-center gap-2 mx-auto">
               <Smartphone className="w-4 h-4" />
-              Log in with Mobile OTP
+              Access via Magic Link
             </button>
             <p className="text-sm text-on-surface-variant">
-              Don't have an account? <span className="text-cosmic-gold font-bold cursor-pointer">Create Account</span>
+              {isLogin ? "New to the path?" : "Already found your path?"} 
+              <span 
+                onClick={() => setIsLogin(!isLogin)}
+                className="text-cosmic-gold font-bold cursor-pointer ml-2 hover:border-b border-cosmic-gold"
+              >
+                {isLogin ? 'Create Account' : 'Sign In'}
+              </span>
             </p>
           </div>
         </motion.div>
